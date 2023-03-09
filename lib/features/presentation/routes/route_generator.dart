@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quotesummeryapp/presentation/pages/entry.dart';
-import 'package:quotesummeryapp/presentation/pages/homepage.dart';
+import 'package:quotesummeryapp/features/presentation/pages/entry.dart';
+import '../pages/homepage.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {

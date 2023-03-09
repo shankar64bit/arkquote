@@ -1,71 +1,41 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
-
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:quotesummeryapp/core/platform/network_info.dart';
+import 'package:quotesummeryapp/core/util/input_converter.dart';
+import 'package:quotesummeryapp/features/data/datasources/app_data_base.dart';
+import 'package:quotesummeryapp/features/data/datasources/quote_main_local_datasource.dart';
+import 'package:quotesummeryapp/features/data/repositories/quote_main_repository_impl.dart';
+import 'package:quotesummeryapp/features/domain/repositories/quote_main_repository.dart';
+import 'package:quotesummeryapp/features/domain/usecases/get_quote_main.dart';
+import 'package:quotesummeryapp/features/presentation/providers/quote_main_provider.dart';
 
 final GetIt sl = GetIt.instance;
 
 Future<void> init() async {
-  //! Features - TestReport
   //StateManagement
-  // sl.registerSingleton<GoogleSignInController>(
-  //     GoogleSignInController()); //login-page-getitmixin-added
-  // sl.registerLazySingleton<TestReportsProvider>(() => TestReportsProvider());
-  // sl.registerLazySingleton<AcbProvider>(() => AcbProvider());
-  // sl.registerLazySingleton<AcbIrProvider>(() => AcbIrProvider());
-  // sl.registerLazySingleton<AcbCrmProvider>(() => AcbCrmProvider());
+  sl.registerLazySingleton<QuoteMainProvider>(() => QuoteMainProvider());
 
-//   ////////////////////////////////////////////////////////////////////////////////////////
-//   //Usecases
-//   sl.registerLazySingleton(() => GetTestReport(sl()));
+  //Usecases
+  sl.registerLazySingleton(() => GetQuoteMain(sl()));
+  //Repository
+  sl.registerLazySingleton<QuoteMainRepository>(
+    () => QuoteMainRepositoryImpl(
+      // remoteDatasource: sl(),
+      localDatasource: sl(),
+      networkInfo: sl(),
+    ),
+  );
 
-//   ////////////////////////////////////////////////////////////////////////////////////////
-//   //Repository
-//   sl.registerLazySingleton<TestReportRepository>(
-//     () => TestReportRepositoryImpl(
-//       remoteDatasource: sl(),
-//       localDatasource: sl(),
-//       networkInfo: sl(),
-//     ),
-//   );
+  //Local-Datasources
+  sl.registerLazySingleton(() => QuoteMainLocalDatasourceImpl());
 
-//   ////////////////////////////////////////////////////////////////////////////////////////
-//   //Remote-Datasources
+  //! Core
+  sl.registerLazySingleton(() => InputConverter());
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
-//   sl.registerLazySingleton<TestReportRemoteDatasourceImpl>(
-//       () => TestReportRemoteDatasourceImpl(client: sl()));
-
-//   sl.registerLazySingleton<UserRemoteDatasourceImpl>(
-//       () => UserRemoteDatasourceImpl(client: sl()));
-
-//   sl.registerLazySingleton<InventoryRemoteDatasourceImpl>(
-//       () => InventoryRemoteDatasourceImpl(client: sl()));
-
-//   ////////////////////////////////////////////////////////////////////////////////////////
-//   //Local-Datasources
-
-//   sl.registerLazySingleton<TestReportLocalDatasourceImpl>(
-//       () => TestReportLocalDatasourceImpl());
-
-//   sl.registerLazySingleton<AcbLocalDatasourceImpl>(
-//       () => AcbLocalDatasourceImpl());
-//   sl.registerLazySingleton<EnergyMeterLocalDatasourceImpl>(
-//       () => EnergyMeterLocalDatasourceImpl());
-
-//   sl.registerLazySingleton(() => AcbIrLocalDatasourceImpl());
-//   sl.registerLazySingleton(() => AcbCrmLocalDatasourceImpl());
-//   sl.registerLazySingleton(() => VcbTimingLocalDatasourceImpl());
-
-//   /////////////////////////////////////////////////////////////////////////////////////////////
-//   //! Core
-//   sl.registerLazySingleton(() => InputConverter());
-//   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
-
-//   /////////////////////////////////////////////////////////////////////////////////////////////
-//   //!External
-//   sl.registerLazySingleton(() => AppDatabase());
+  //!External
+  sl.registerLazySingleton(() => AppDatabase());
   sl.registerLazySingleton(() => http.Client());
   sl.registerLazySingleton(() => DataConnectionChecker());
-
-  /////////////////////////////////////////////////////////////////////////////////////////////
 }

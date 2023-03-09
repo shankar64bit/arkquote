@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:quotesummeryapp/presentation/pages/tabs/1tab.dart';
-import 'package:quotesummeryapp/presentation/pages/tabs/2tab.dart';
-import 'package:quotesummeryapp/presentation/pages/tabs/3tab.dart';
-import 'package:quotesummeryapp/presentation/pages/tabs/4tab.dart';
+import 'package:quotesummeryapp/features/presentation/pages/code_reusable/codereusable.dart';
+import 'package:quotesummeryapp/features/presentation/pages/entry.dart';
+import 'package:quotesummeryapp/features/presentation/pages/tabs/1tab.dart';
+import 'package:quotesummeryapp/features/presentation/pages/tabs/2tab.dart';
+import 'package:quotesummeryapp/features/presentation/pages/tabs/3tab.dart';
+import 'package:quotesummeryapp/features/presentation/pages/tabs/4tab.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -16,6 +17,7 @@ class HomePage extends StatelessWidget {
             centerTitle: true,
             title: Text('N_A_M_E   Q U O T E'),
           ),
+          drawer: myDrawer,
           body: LayoutBuilder(
             builder: (context, constraints) {
               if (constraints.maxWidth > 700) {
@@ -114,6 +116,9 @@ class HomePage extends StatelessWidget {
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                           ),
+                          // FloatingActionButton(onPressed: () {
+                          //   Navigator.pushNamed(context, '/root');
+                          // })
                         ],
                       ),
                       Expanded(

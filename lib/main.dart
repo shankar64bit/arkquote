@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quotesummeryapp/presentation/routes/route_generator.dart';
+
+import 'features/presentation/routes/route_generator.dart';
 
 void main() {
   runApp(MyApp());

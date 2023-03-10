@@ -6,7 +6,6 @@ class thirdTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.deepPurple[100],
       child: Center(
           child: Text(
         '3RD TAB [Payment Drtails]',

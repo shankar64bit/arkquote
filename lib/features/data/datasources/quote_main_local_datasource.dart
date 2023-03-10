@@ -44,7 +44,6 @@ class QuoteMainLocalDatasourceImpl extends Table
       quotedate: tQuoteMainData.quotedate,
       quotename: tQuoteMainData.quotename,
     );
-
     return tQuoteMainModel;
   }
 

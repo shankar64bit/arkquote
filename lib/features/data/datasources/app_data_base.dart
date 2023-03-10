@@ -3,12 +3,15 @@ import 'dart:io';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:quotesummeryapp/features/data/datasources/quote_item_local_datasource.dart';
 import 'package:quotesummeryapp/features/data/datasources/quote_main_local_datasource.dart';
+import '../models/quote_item_model.dart';
 import '../models/quote_main_model.dart';
 part 'app_data_base.g.dart';
 
 @DriftDatabase(tables: [
   QuoteMainLocalDatasourceImpl,
+  QuoteItemLocalDatasourceImpl,
 ])
 //---------------------------------------------------------------------------------------------------------------//
 
@@ -64,15 +67,59 @@ class AppDatabase extends _$AppDatabase {
     return (select(quoteMainLocalDatasourceImpl)..where((u) => u.id.equals(id)))
         .getSingle();
   }
+
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  Future<int> createQuoteItem(QuoteItemModel quoteItemtolocal) {
+    return into(quoteItemLocalDatasourceImpl)
+        .insert(QuoteItemLocalDatasourceImplCompanion.insert(
+      quoteno: quoteItemtolocal.quoteno,
+      itemname: quoteItemtolocal.itemname,
+      qty: quoteItemtolocal.qty,
+      unitprice: quoteItemtolocal.unitprice,
+    ));
+  }
+
+  Future<bool> updateQuoteItem(QuoteItemModel quoteItemtoupdate, int id) {
+    String quoteno = quoteItemtoupdate.quoteno;
+    String itemname = quoteItemtoupdate.itemname;
+    int qty = quoteItemtoupdate.qty;
+    double unitprice = quoteItemtoupdate.unitprice;
+    return update(quoteItemLocalDatasourceImpl).replace(QuoteItemLocalData(
+      id: id,
+      quoteno: quoteno,
+      itemname: itemname,
+      qty: qty,
+      unitprice: unitprice,
+    ));
+  }
+
+  Future<int> deleteQuoteItemById(int id) {
+    return (delete(quoteItemLocalDatasourceImpl)
+          ..where((tbl) => tbl.id.equals(id)))
+        .go();
+  }
+
+  Future<List<QuoteItemLocalData>>
+      getQuoteItemLocalDatadourceImpleList() async {
+    return await select(quoteItemLocalDatasourceImpl).get();
+  }
+
+  Future<List<QuoteItemLocalData>> getQuoteItemLocalDataWithQno(String sn) {
+    return (select(quoteItemLocalDatasourceImpl)
+          ..where((u) => u.quoteno.equals(sn)))
+        .get();
+  }
+
+  Future<QuoteItemLocalData> getQuoteItemLocalDataWithId(int id) {
+    return (select(quoteItemLocalDatasourceImpl)..where((u) => u.id.equals(id)))
+        .getSingle();
+  }
 }
 
 LazyDatabase _openConnection() {
-  // the LazyDatabase util lets us find the right location for the file async.
   return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
-    // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db5.sqlite'));
+    final file = File(p.join(dbFolder.path, 'db10.sqlite'));
     return NativeDatabase(file);
   });
 }

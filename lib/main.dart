@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'injection_container.dart' as di;
 
 import 'features/presentation/routes/route_generator.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  await di.init();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'robotic',
       ),
-      initialRoute: '/',
+      initialRoute: '/root',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

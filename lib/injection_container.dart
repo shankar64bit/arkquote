@@ -10,11 +10,15 @@ import 'package:quotesummeryapp/features/domain/repositories/quote_main_reposito
 import 'package:quotesummeryapp/features/domain/usecases/get_quote_main.dart';
 import 'package:quotesummeryapp/features/presentation/providers/quote_main_provider.dart';
 
+import 'features/data/datasources/quote_Item_local_datasource.dart';
+import 'features/presentation/providers/quote_item_provider.dart';
+
 final GetIt sl = GetIt.instance;
 
 Future<void> init() async {
   //StateManagement
   sl.registerLazySingleton<QuoteMainProvider>(() => QuoteMainProvider());
+  sl.registerLazySingleton<QuoteItemProvider>(() => QuoteItemProvider());
 
   //Usecases
   sl.registerLazySingleton(() => GetQuoteMain(sl()));
@@ -28,7 +32,10 @@ Future<void> init() async {
   );
 
   //Local-Datasources
-  sl.registerLazySingleton(() => QuoteMainLocalDatasourceImpl());
+  sl.registerLazySingleton<QuoteMainLocalDatasourceImpl>(
+      () => QuoteMainLocalDatasourceImpl());
+  sl.registerLazySingleton<QuoteItemLocalDatasourceImpl>(
+      () => QuoteItemLocalDatasourceImpl());
 
   //! Core
   sl.registerLazySingleton(() => InputConverter());

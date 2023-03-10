@@ -4,9 +4,11 @@ import '../pages/homepage.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
     switch (settings.name) {
-      // case '/root':
-      //   return MaterialPageRoute(builder: (_) => Entry());
+      case '/root':
+        return MaterialPageRoute(builder: (_) => Entry(args));
+
       case '/':
         return MaterialPageRoute(builder: (_) => HomePage());
 
@@ -20,6 +22,12 @@ class RouteGenerator {
       //         id: args,
       //       ),
       //     );
+      //   }
+      //   return _errorRoute();
+
+      // case '/add_AT':
+      //   if (args is Map) {
+      //     return MaterialPageRoute(builder: (_) => Add_AT_Details(args));
       //   }
       //   return _errorRoute();
 

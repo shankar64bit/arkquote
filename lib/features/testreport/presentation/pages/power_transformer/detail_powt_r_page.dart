@@ -1,0 +1,293 @@
+import 'package:flutter/material.dart';
+import 'package:get_it_mixin/get_it_mixin.dart';
+
+import '../../../data/models/equipment/powt/powt_r_model.dart';
+import '../../providers/powt_provider/powt_r_provider.dart';
+
+class Detail_Powt_R_page extends StatelessWidget with GetItMixin {
+  Map args = {};
+
+  Detail_Powt_R_page(@required this.args, {Key key}) : super(key: key);
+
+  Powt_R_Model powt_RModel, ntr;
+
+  @override
+  Widget build(BuildContext context) {
+    getX((Powt_R_Provider x) => x.getPowtrById(args['id']));
+    Powt_R_Model ntr = watchOnly((Powt_R_Provider x) => x.powt_R_Model);
+
+    print(ntr);
+    print("ntr  Powt_R......");
+    var mob = const Text('Powt_R Test Details', style: TextStyle(fontSize: 15));
+    var desk =
+        const Text('Powt_R Test Details', style: TextStyle(fontSize: 20));
+
+    return Scaffold(
+      appBar: AppBar(
+        title: LayoutBuilder(builder: (context, constraints) {
+          if (constraints.maxWidth > 400) {
+            return desk;
+          } else {
+            return mob;
+          }
+        }),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.popAndPushNamed(context, '/edit_Powt_R', arguments: {
+                  'id': args['id'],
+                  'POWT_ID': args['POWT_ID'],
+                  'trDatabaseID': args['trDatabaseID']
+                });
+              },
+              icon: const Icon(Icons.edit)),
+          IconButton(
+            onPressed: () {
+              getX((Powt_R_Provider x) => x.deletePowtr(args['id']));
+              Navigator.popAndPushNamed(context, '/detail_Powt_R', arguments: {
+                'id': args['id'],
+                'trDatabaseID': args['trDatabaseID']
+              });
+            },
+            icon: const Icon(Icons.delete_forever),
+          ),
+        ],
+      ),
+      body: ListView(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(3, 0, 15, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ConstrainedBox(
+                              constraints:
+                                  BoxConstraints(minHeight: 0, maxWidth: 700),
+                              child: display_Powt_R_details(ntr)),
+                        ],
+                      ),
+                    ),
+                  ]),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container display_Powt_R_details(Powt_R_Model ntr) {
+    return Container(
+      child: Column(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Card(
+                      elevation: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(children: [
+                          Text('ID : ' + args['id'].toString(),
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                  fontSize: 13)),
+                        ]),
+                      ),
+                    ),
+                    Card(
+                      elevation: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(children: [
+                          Text('Trno : ' + ntr.trNo.toString(),
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 13)),
+                          Divider(height: 10),
+                          Text('Serial No : ' + ntr.serialNo.toString(),
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 13)),
+                          Divider(height: 10),
+                          ntr.hv_1u_1v != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Applied Voltage HV Side 1U 1V : ' +
+                                            ntr.hv_1u_1v.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.hv_1v_1w != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Applied Voltage HV Side 1V 1W : ' +
+                                            ntr.hv_1v_1w.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.hv_1w_1u != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Applied Voltage HV Side 1W 1U : ' +
+                                            ntr.hv_1w_1u.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.hv_1u_1n != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Applied Voltage HV Side 1U-1N : ' +
+                                            ntr.hv_1u_1n.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.hv_1v_1n != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Applied Voltage HV Side 1V 1N : ' +
+                                            ntr.hv_1v_1n.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.hv_1w_1n != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Applied Voltage HV Side 1W_1N : ' +
+                                            ntr.hv_1w_1n.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.lv_2u_2v != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Measured Voltage LV Side 2U_2v : ' +
+                                            ntr.lv_2u_2v.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.lv_2v_2w != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Measured Voltage LV Side 2V 2W : ' +
+                                            ntr.lv_2v_2w.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.lv_2w_2u != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Measured Voltage LV Side 2W 2U : ' +
+                                            ntr.lv_2w_2u.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.lv_2u_2n != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Measured Voltage LV Side 2U 2N : ' +
+                                            ntr.lv_2u_2n.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.lv_2v_2n != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Measured Voltage LV Side 2V 2N : ' +
+                                            ntr.lv_2v_2n.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          ntr.lv_2w_2n != 0.00
+                              ? Column(
+                                  children: [
+                                    Text(
+                                        'Measured Voltage LV Side 2W 2N : ' +
+                                            ntr.lv_2w_2n.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black, fontSize: 13)),
+                                    Divider(height: 10),
+                                  ],
+                                )
+                              : Container(),
+                          Text('Tap Position : ' + ntr.tapPosition.toString(),
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 13)),
+                          Divider(height: 10),
+                          Text(
+                              'Equipment Used : ' +
+                                  ntr.equipmentUsed.toString(),
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 13)),
+                        ]),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

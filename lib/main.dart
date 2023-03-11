@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
       title: 'Quote Client Detail',
       theme: ThemeData(
         colorScheme: const ColorScheme.light().copyWith(
-          primary: Color.fromARGB(255, 140, 12, 12),
+          // primary: Color.fromARGB(255, 140, 12, 12),
+          primary: Colors.grey[900],
         ),
         fontFamily: 'robotic',
       ),

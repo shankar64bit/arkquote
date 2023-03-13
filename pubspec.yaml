@@ -52,6 +52,7 @@ dependencies:
   multi_select_flutter: ^4.1.2
   readmore: ^2.2.0
   sqlite3: ^1.9.2
+  snippet_coder_utils: ^1.0.13
   
   
 

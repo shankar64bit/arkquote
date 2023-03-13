@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
+import '../../../../injection_container.dart';
 import '../../../data/models/quote_item_model.dart';
 import '../../providers/quote_item_provider.dart';
 
@@ -22,6 +23,39 @@ class secTab extends StatelessWidget with GetItMixin {
     QuoteItemModel ntr = watchOnly((QuoteItemProvider x) => x.quoteItemModel);
     print(ntr);
 
+    // var collect = sl<QuoteItemProvider>().quoteItemlocaldataList;
+    // List<dynamic> collectIDlist = [];
+    // for (var i in collect) {
+    //   int eachid = i.id;
+    //   collectIDlist.add(eachid);
+    //   print('object');
+    //   print(collectIDlist);
+    // }
+    // print(collectIDlist);
+
+    return Container(
+      child: Expanded(
+        child: ListView.builder(
+            itemCount: 1,
+            itemBuilder: ((context, index) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Column(
+                      children: [
+                        SizedBox(child: generateListOfItem(ntr)),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            })),
+      ),
+    );
+  }
+
+  generateListOfItem(QuoteItemModel ntr) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

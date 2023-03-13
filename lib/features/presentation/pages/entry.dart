@@ -72,7 +72,6 @@ class Entry extends StatelessWidget with GetItMixin {
               IconButton(
                 onPressed: () async {
                   final QuoteItemModel reportToLocalQuoteItem = QuoteItemModel(
-                    id: 1,
                     itemname: 'Transformer',
                     qty: 10,
                     quoteno: '1',
@@ -82,8 +81,21 @@ class Entry extends StatelessWidget with GetItMixin {
                   getX((QuoteItemProvider x) =>
                       x.addQuoteItem(reportToLocalQuoteItem));
                   watchOnly((QuoteItemProvider x) => {});
-                  print('storing into local database');
+                  print('storing into local database [Item 1]');
                   print(reportToLocalQuoteItem);
+
+                  final QuoteItemModel reportToLocalQuoteItem2 = QuoteItemModel(
+                    itemname: 'Breaker',
+                    qty: 20,
+                    quoteno: '2',
+                    unitprice: 14578.00,
+                  );
+
+                  getX((QuoteItemProvider x) =>
+                      x.addQuoteItem(reportToLocalQuoteItem2));
+                  watchOnly((QuoteItemProvider x) => {});
+                  print('storing into local database [Item 2]');
+                  print(reportToLocalQuoteItem2);
                 },
                 icon: const Icon(Icons.save),
                 color: Colors.deepOrange,

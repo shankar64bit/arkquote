@@ -45,23 +45,23 @@ class firstTab extends StatelessWidget with GetItMixin {
                       children: [
                         Text('Quote No : ' + ntr.id.toString(),
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 14)),
+                                color: Colors.black, fontSize: 14)),
                         SizedBox(height: 10),
                         Text('Quote Name : ' + ntr.quotename.toString(),
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 14)),
+                                color: Colors.black, fontSize: 14)),
                         SizedBox(height: 10),
                         Text('Client Name : ' + ntr.client.toString(),
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 14)),
+                                color: Colors.black, fontSize: 14)),
                         SizedBox(height: 10),
-                        Text('Quote Validity : ' + ntr.address.toString(),
+                        Text('Address : ' + ntr.address.toString(),
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 14)),
+                                color: Colors.black, fontSize: 14)),
                         SizedBox(height: 10),
                         Text('Quote Validity : ' + ntr.quotedate.toString(),
                             style: const TextStyle(
-                                color: Colors.white, fontSize: 14)),
+                                color: Colors.black, fontSize: 14)),
                       ]),
                 ),
               ),
@@ -73,65 +73,71 @@ class firstTab extends StatelessWidget with GetItMixin {
                 child: Padding(
                   padding: EdgeInsets.all(5),
                   child: Column(children: [
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'Item Name\n',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 13),
-                            ),
-                            Text(
-                              ntr2.itemname,
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        VerticalDivider(width: 10),
-                        Column(
-                          children: [
-                            Text(
-                              ' Unit Price\n',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 13),
-                            ),
-                            Text(
-                              ntr2.unitprice.toString(),
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        VerticalDivider(width: 10),
-                        Column(
-                          children: [
-                            Text(
-                              '  Qty\n',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 13),
-                            ),
-                            Text(
-                              selectedQtyvalue.toString(),
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                        VerticalDivider(width: 10),
-                        Column(
-                          children: [
-                            Text(
-                              '  Total Price\n',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 13),
-                            ),
-                            Text(
-                              totalprice.toString(),
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    totalprice != 0.0
+                        ? Row(
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    'Item Name\n',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13),
+                                  ),
+                                  Text(
+                                    ntr2.itemname,
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              VerticalDivider(width: 10),
+                              Column(
+                                children: [
+                                  Text(
+                                    ' Unit Price\n',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13),
+                                  ),
+                                  Text(
+                                    ntr2.unitprice.toString(),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              VerticalDivider(width: 10),
+                              Column(
+                                children: [
+                                  Text(
+                                    '  Qty\n',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13),
+                                  ),
+                                  Text(
+                                    selectedQtyvalue.toString(),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              VerticalDivider(width: 10),
+                              Column(
+                                children: [
+                                  Text(
+                                    '  Total Price\n',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13),
+                                  ),
+                                  Text(
+                                    totalprice.toString(),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Container(),
                   ]),
                 ),
               ),
